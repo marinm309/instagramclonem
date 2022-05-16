@@ -3,6 +3,8 @@ asgiref==3.4.1
 auto-py-to-exe==2.10.1
 backports.entry-points-selectable==1.1.1
 beautifulsoup4==4.10.0
+boto3==1.23.0
+botocore==1.26.0
 bottle==0.12.19
 bottle-websocket==0.2.9
 bs4==0.0.1
@@ -16,6 +18,8 @@ distlib==0.3.4
 Django==4.0
 django-background-tasks==1.2.5
 django-compat==1.0.15
+django-filter==21.1
+django-storages==1.12.3
 Eel==0.12.4
 filelock==3.4.0
 future==0.18.2
@@ -27,6 +31,7 @@ idna==3.2
 imageio==2.19.1
 imageio-ffmpeg==0.4.7
 instaloader==4.8.1
+jmespath==1.0.0
 joblib==1.1.0
 keyboard==0.13.5
 mouse==0.7.1
@@ -46,10 +51,12 @@ pycparser==2.20
 pygame==2.0.1
 pyinstaller==4.5.1
 pyinstaller-hooks-contrib==2021.3
+python-dateutil==2.8.2
 pywin32-ctypes==0.2.0
 PyYAML==6.0
 regex==2022.1.18
 requests==2.26.0
+s3transfer==0.5.2
 six==1.16.0
 soupsieve==2.3.1
 sprites==1.39
