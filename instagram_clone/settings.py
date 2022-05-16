@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'posts.apps.PostsConfig',
     'users.apps.UsersConfig',
     'chats.apps.ChatsConfig',
+
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -124,13 +126,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+STATIC_URL = "/static/"
 
 MEDIA_URL = '/images/'
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATICFILES_DIRS = [
+
+    os.path.join(BASE_DIR, 'static'),
+
+]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
@@ -140,3 +147,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_QUERYSTRING_AUTH = False
+
+AWS_S3_FILE_OVERWRITE = False
+
+AWS_ACCESS_KEY_ID = 'AKIA5ZZDO5KFR3BYCEGA'
+
+AWS_SECRET_ACCESS_KEY = '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'
+
+AWS_STORAGE_BUCKET_NAME = 'instagramclonem'

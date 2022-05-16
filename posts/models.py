@@ -14,7 +14,7 @@ class Post(models.Model):
     description = models.TextField(blank=True, null=True)
     like = models.IntegerField(default=0, null=True)
     num_of_comments = models.IntegerField(default=0, null=True)
-    photo = models.ImageField(null=True, upload_to='posts')
+    photo = models.ImageField(null=True, upload_to='posts', blank=True)
     file_upload = models.FileField(null=True, upload_to='posts', validators=[FileExtensionValidator(allowed_extensions=['MOV','avi','mp4','webm','mkv','png','jpg'])])
     post_type = models.CharField(max_length=100, null=True)
     user_liked = models.ForeignKey('Likes', on_delete=models.SET_NULL, null=True)
