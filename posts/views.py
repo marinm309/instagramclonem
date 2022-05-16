@@ -1,4 +1,3 @@
-from operator import mod
 from django.shortcuts import redirect, render
 from .forms import PostForm, CommentForm, StoryForm
 from.models import CommentTheComment, Post, Likes, Comments, CommentLikes, Story
@@ -6,7 +5,6 @@ from django.contrib.auth.decorators import login_required
 from users.models import Profile, UserFollowers
 import os
 from django.http import JsonResponse
-from django.urls import reverse
 import re
 
 @login_required(login_url='login')
