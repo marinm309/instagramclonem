@@ -1,0 +1,71 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<div class="profile-wrapper">
+    <div class="profile-wrapper-editor">
+        <section class="user-details">
+            <div class="user-img-large">
+                <img src="{{profile.profile_pic.url}}" alt="">
+                {% if profile.user.profile in lst %}
+                <div style="justify-content: center; display: flex;" class="user-follow"><a class="user-follow-btn" href="{% url 'follow' profile.id %}" style="color: rgb(245, 56, 56);"><span class="unfollow-color" id="{{profile.id}}">Unfollow</span></a></div>
+                {% elif profile.user not in lst and profile.user.profile != user %}
+                <div style="justify-content: center; display: flex;" class="user-follow"><a class="user-follow-btn" href="{% url 'follow' profile.id %}"><span class="follow-color" id="{{profile.id}}">Follow</span></a></div>
+                {% elif profile.user.profile == user %}
+                <div class="profile-follow"><a href="{% url 'logout' %}" style="color: rgb(245, 56, 56);">Logout</a></div>
+                {% endif %}
+            </div>
+            <div class="about">
+                <div><h3>{{profile.user}}</h3></div>
+                <div class="stats-info">
+                    <ul>
+                        <li><span>{{total_posts}}</span> post{{profile.user.num_of_posts|pluralize:"s"}}</li>
+                        <li><a href="{% url 'followers' profile.user.profile %}"><span id="{{profile.id}}123">{{profile.user.profile.num_of_followers}}</span> follower{{profile.user.profile.num_of_followers|pluralize:"s"}}</a></li>
+                        <li><a href="{% url 'following' profile.user.profile %}"><span id="{{profile.id}}321">{{profile.user.profile.num_of_followings}}</span> following{{profile.user.profile.num_of_followings|pluralize:"s"}}</a></li>
+                    </ul>
+                </div>
+                <div class="user-info">
+                    {% if profile.first_name is None %}
+                    <div class="user-name"><h1></h1></div>
+                    {% else %}
+                    <div class="user-name"><h1>{{profile.first_name}} {{profile_lastname}}</h1></div>
+                    {% endif %}
+                    <div class="user-description">
+                        {% if profile.bio is not None %}
+                        {{ profile.bio|linebreaks }}
+                        {% endif %}
+                        {% if profile.user.profile == user %}
+                        <div class="login-wrapper" style="width: auto; height: auto; background-color: #eee; box-shadow: none; border: none; cursor: default;">
+                            <form class="edit-profile-form" action="{% url 'edit-profile' profile.id %}">
+                                <input class="edit-profile-btn" type="submit" value="Edit profile" style="cursor: pointer; background-color: white; font-weight: bold; width: 100%;">
+                            </form>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
+        <hr id="random-hr">
+        <section class="user-posts">
+            {% for post in posts %}
+            <div class="single-post">
+                {% if post.post_type == 'photo' %}
+                    <div class="post-img"><a href="{% url 'single-post' post.id %}"><img style="overflow: hidden; height: 400px;" src="{{post.file_upload.url}}" alt=""></a></div>
+                {% elif post.post_type == 'video' %}
+                    <div class="post-img" style="overflow: hidden;">
+                        <a href="{% url 'single-post' post.id %}">
+                            <video muted width="400" style="overflow: hidden; height: 400px;">
+                                <source src="{{post.file_upload.url}}" type="video/mp4">
+                            </video>
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </section>
+    </div>
+</div>
+
+{% endblock content %}

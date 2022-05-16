@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500&display=swap" rel="stylesheet">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="login-png">
+        <div class="login-elements">
+            <div class="login-wrapper register-wrapper">
+                <h1>Instagram</h1>
+                <form action="" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% for field in form %}
+
+                    <div class="register-label">
+                        {{field.label}}
+                    </div>
+                    {{field}}
+
+                    {% endfor %}
+                    <input id="login-btn" type="submit" value="Register">
+                </form>
+            </div>
+        
+            <div class="register-link">
+                <p>Already registered? <a id="signup-btn" href="{% url 'login' %}">Sign in</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

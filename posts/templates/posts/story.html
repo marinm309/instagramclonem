@@ -1,0 +1,57 @@
+
+
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<style>
+    body{
+        overflow: hidden;
+    }
+</style>
+
+<div class="single-user-stories">
+    <div class="progress-container">
+        {% for story in modified %}
+        {% if first_show.story_length == 0 %}
+        <div id="{{story}}" class="progress-bar" data-time="{{first_show.story_length_custom}}"></div>
+        {% else %}
+        <div id="{{story}}" class="progress-bar" data-time="{{first_show.story_length}}"></div>
+        {% endif %}
+        <style>
+            #move{
+                animation-duration: 2s;
+            }
+        </style>
+        {% endfor %}
+        <a style="color: #eee; font-size: 35px; z-index: 6;" href="{% url 'home' %}">X</a>
+        <script>
+            var story = document.getElementById('move')
+            var story_time = story.getAttribute('data-time')
+            var story_time_auto = story_time + '000'
+            story.style.animationDuration = story_time + 's'
+            setTimeout(function() {
+            document.querySelector("#story-forward").click();
+            }, parseInt(story_time_auto)); 
+        </script>
+    </div>
+    <a class="left-arrow-btn" href="{% url 'story-backward' first_show.user.username first_show.id %}"></a>
+    <a id="story-forward" class="right-arrow-btn" href="{% url 'story-forward' first_show.user.username first_show.id %}"></a>
+    <div style="color: #eee; padding-left: 6%; height: 50px;">
+        <h1>{{first_show.time_ago}}</h1>
+    </div>
+    <div class="story-content">
+    
+        {% if first_show.story_type == 'photo' %}
+        <img class="story-img" src="{{first_show.file_upload.url}}" alt="">
+        {% else %}
+        <video class="story-video" autoplay muted width="400">
+            <source class="story-video" src="{{first_show.file_upload.url}}" type="video/mp4">
+        </video>
+        {% endif %}
+    
+    </div>
+</div>
+
+{% endblock content %}

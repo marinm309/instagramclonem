@@ -1,0 +1,23 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<div class="login-png">
+    <div class="login-elements">
+        <div class="login-wrapper-special">
+            <form action="{% url 'create-post' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% for field in form %}
+                {{field.label}}
+                {{field}}
+                {% endfor %}
+                <input id="login-btn" type="submit" value="Post">
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

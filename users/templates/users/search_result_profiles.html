@@ -1,0 +1,38 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+{% load static %}
+
+{% if match %}
+
+<div class="follow-wrapper">
+    <h1 style="text-align: center;">Search results</h1>
+    {% for profile in profiles %}
+    {% if profile.user != user.user %}
+    <div class="single-follow-wrapper">
+        <a href="{% url 'profile' profile.user %}"><img src="{{profile.profile_pic.url}}" alt=""></a>
+        <h5><a href="{% url 'profile' profile.user %}">{{profile.user}}</a></h5>
+        {% if profile.user.profile in lst %}
+        <div class="user-follow"><a class="user-follow-btn" href="{% url 'follow' profile.id %}" style="color: rgb(245, 56, 56);"><span id="{{profile.id}}" class="unfollow-color">Unfollow</span></a></div>
+        {% else %}
+        <div class="user-follow"><a class="user-follow-btn" href="{% url 'follow' profile.id %}"><span id="{{profile.id}}" class="follow-color">Follow</span></a></div>
+        {% endif %}
+        <p><a href="{% url 'followers' profile.username %}"><span id="{{profile.id}}456">{{profile.num_of_followers}}</span> followers</a></p>
+        <p><a href="{% url 'following' profile.username %}"><span id="{{profile.id}}654">{{profile.num_of_followings}}</span> following</a></p>
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+
+
+
+{% else %}
+
+    <div class="follow-wrapper">
+        <h1 style="text-align: center;">No Matches</h1>
+    </div>
+
+{% endif %}
+
+{% endblock content %}

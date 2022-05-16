@@ -1,0 +1,73 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="inbox-wrapper">
+    <div class="left-inbox">
+        <form id="chat-form-id" class="chat-form" action="{% url 'chat-search' %}" method="" data-href="{% url 'chat-search' %}">
+            {% csrf_token %}
+            <div class="nav-search">
+                <i class="fa fa-search"></i>
+                <input type="text" placeholder="Search..." id="chat_search_word">
+            </div>
+        </form>
+        {% for chat in chats %}
+        {% if chat.other_user.username in friends %}
+        <a class="friend-btn" id="{{chat.other_user.username}}" href="{% url 'active-chat' chat.other_user.id %}">
+            <div class="friend">
+                <div class="friend-img"><img src="{{chat.other_user.profile_pic.url}}" alt=""></div>
+                <div class="friend-name-activity">
+                    <p>{{chat.other_user.username}}</p>
+                    {% if chat.other_user.is_active %}
+                    <p id="status" style="color: rgb(156, 153, 153);">Active now</p>
+                    {% endif %}
+                    {% if chat.other_user.is_active %}
+                    <div style="border-radius: 50%; width: 20px; height: 20px; background-color: rgb(11, 224, 11); position: relative; right: 20px; bottom: 10px; margin: 0; padding: 0;"></div>
+                    {% else %}
+                    <p id="status" style="color: rgb(156, 153, 153);">{{chat.other_user.get_last_seen}}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </a>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+
+    <div class="right-inbox" id="to_be_shown" style="object-fit: cover;" >
+        <div class="friend-info">
+            <div class="friend chat-with">
+                <div style="width: 35px;" height="35px; object-fit: cover;" class="friend-img"><img style="height: 35px; width: 35px;" id="js-img" src="" alt=""></div>
+                <div class="friend-name-activity">
+                    <p style="font-size: 13px;" id="js-username"></p>
+                    <p id="js-status" style="color: rgb(156, 153, 153); font-size: 13px;"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-wrapper">
+            <ul class="test-mess" style="padding: 0 20px;">
+                
+            </ul>
+        </div>
+        <div class="chat-input">
+            
+            <div class="add-comments chat-field">
+            <form class="send-message-form" action="{% url 'send-message' %}" method="POST" data-href="{% url 'send-message' %}">
+                {% csrf_token %}
+                <input class="message-field type-comments" type="text" name="message" placeholder="Type...">
+                <input class="send-message-btn post-comments comment-btn" id="" type="submit" value="Send">
+            </form>
+            </div>
+            
+        </div>
+    </div>
+    <div id="to_be_hidden" style="display: flex; align-items: center; margin: 0 auto;">
+        <h1 style="text-align: center;">START A TALK</h1>
+    </div>
+
+
+</div>
+
+{% endblock content %}

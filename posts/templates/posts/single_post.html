@@ -1,0 +1,114 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<div class="single-post-wrapper">
+    <div class="post-wrapper single">
+        <div class="post-top">
+            <div class="user-img"><a href="{% url 'profile' post.user %}"><img src="{{post.user.user.profile.profile_pic.url}}" alt=""></a></div>
+            <div class="user-name"><h5><a href="{% url 'profile' post.user %}">{{post.user}}</a></h5></div>
+            {% if post.user in lst %}
+            <div class="user-follow"><a class="user-follow-btn" href="{% url 'follow' post.user.id %}" style="color: rgb(245, 56, 56);"><span class="unfollow-color" id="{{post.user.id}}">Unfollow</span></a></div>
+            {% elif post.user not in lst and post.user.user != user.user %}
+            <div class="user-follow"><a class="user-follow-btn" href="{% url 'follow' post.user.id %}"><span class="follow-color" id="{{post.user.id}}">Follow</span></a></div>
+            {% endif %}
+            {% if post.user.user == user.user %}
+            <div class="user-name"><h5><a style="color: red;" href="{% url 'delete-post' post.id %}">Remove post</a></h5></div>
+            {% endif %}
+        </div>
+        {% if post.post_type == 'photo' %}
+        <div class="post-img"><img src="{{post.file_upload.url}}" alt=""></div>
+        {% elif post.post_type == 'video' %}
+        <div class="post-img">
+            <video id="myvid" width="400" muted autoplay>
+                <source src="{{post.file_upload.url}}" type="video/mp4">
+            </video>
+        </div>
+        {% endif %}
+        <div class="post-bottom">
+            <div class="post-like">
+                {% if liked == 0 %}
+                <div class="like-btn"><a class="like" href="{% url 'like-post' post.id %}"><svg id="{{post.id}}6969" class="black-hearth _8-yf5 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"/></svg></a></div>
+                {% else %}
+                <div class="like-btn"><a class="like" href="{% url 'like-post' post.id %}"><svg id="{{post.id}}6969" class="red-hearth _8-yf5 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"/></svg></a></div>
+                {% endif %}
+                <div class="like-num"><h5><span class="ajax-likes" id="{{post.id}}">{{post.num_of_likes}}</span> Like{{post.num_of_likes|pluralize:"s"}}</h5></div>
+            </div>
+            <div class="post-description"><span><h5>{{post.user}}</h5></span><p>{{post.description}}</p></div>
+            <div class="post-comments">
+                <div class="time-ago single-post-time"><h6>{{post.get_date}}</h6></div>
+                <div class="add-comments">
+                    <form action="{% url 'create-comment' post.id %}" method="POST">
+                        {% csrf_token %}
+                        <input class="type-comments" id="z{{post.id}}" type="text" placeholder="Add a comment..." name="comment">
+                        <input class="post-comments single-comment-btn" value="Post" type="submit" data-href="{% url 'create-comment' post.id %}" data-id="z{{post.id}}">
+                    </form>
+                    <span id="hidden-comment-id" style="display: none;"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if not empty %}
+    <div class="comments-wrapper">
+        <ul class="single-comment-delete-lst">
+        {% for comment in comments %}
+        <li id="{{comment.id}}789" class="alabala">
+        <div class="comment-wrapper">
+            <div style="justify-content: space-between;" class="post-top single-top">
+                <div style="display: flex; align-items: center;">
+                <div class="user-img"><a href="{% url 'profile' comment.user %}"><img src="{{comment.user.user.profile.profile_pic.url}}" alt=""></a></div>
+                <div class="user-name"><h5><a href="{% url 'profile' comment.user %}">{{comment.user}}</a></h5></div>
+                <div style="margin-left: 5px;" class="user-name"><p style="font-size: 12px;">{{comment.description}}</p></div>
+                </div>
+                <div style="display: flex; align-items: center;">
+                {% if comment.id not in test_lst %}
+                <a style="height: 12; width: 12px; font-size: 3px;" class="single-post-comment-like-btn" href="{% url 'like-comment' comment.id %}"><svg style="height: 12; width: 12px;" id="{{comment.id}}1234" class="black-hearth _8-yf5 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"/></svg></a>
+                {% else %}
+                <a style="height: 12; width: 12px; font-size: 3px;" class="single-post-comment-like-btn" href="{% url 'like-comment' comment.id %}"><svg style="height: 12; width: 12px;" id="{{comment.id}}1234" class="red-hearth _8-yf5 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"/></svg></a>
+                {% endif %}
+                <h5><span id="{{comment.id}}">{{comment.num_of_likes}}</span> Like{{comment.num_of_likes|pluralize:"s"}}</h5>
+                </div>
+            </div>
+            <div class="single-post-comment">
+                <p style="font-size: 11px; color: rgb(165, 163, 163);">{{comment.get_date}}</p>
+                
+                
+                {% if comment.user == user.user.profile %}
+                <h5><a class="delete-single-comment" href="{% url 'delete-comment' comment.post.id comment.id %}" style="color: red;">Delete</a></h5>
+                {% else %}
+                <h5><a style="font-size: 12px; color: rgb(102, 101, 101);" class="reply-btn" href="{% url 'start-reply' comment.user.id comment.id %}">Reply</a></h5>
+                {% endif %}
+            </div>
+            {% if comment.num_of_replies > 0 %}
+            <h6 style="margin: 0; text-align: center; width: 50%;"><a class="view-replies-btn" href="{% url 'show-replies' comment.id %}">View replies({{comment.num_of_replies}})</a></h6>
+            <ul style="display: none;" id="{{comment.id}}007">
+            {% for reply in comment.all_replies %}
+            <li id="{{reply.id}}">
+                <div id="{{comment.id}}007" style="margin-left: 30px; margin-top: 5px; padding: 0;" class="post-top single-top single-top-test">
+                    <div class="user-img"><a href="{% url 'profile' comment.user %}"><img src="{{reply.user.profile_pic.url}}" alt=""></a></div>
+                    <div class="user-name"><h5><a href="{% url 'profile' comment.user %}">{{reply.user}}</a></h5></div>
+                    <div style="margin-left: 5px;" class="user-name"><p style="font-size: 12px;">{{reply.description}}</p></div>
+                    {% if reply.user == user.user.profile %}
+                    <h5><a class="delete-reply-btn" href="{% url 'delete-reply' reply.id %}" style="color: red; margin-left: 5px;">Delete</a></h5>
+                    {% endif %}
+                </div>
+            </li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        </li>
+        {% endfor %}
+        </ul>
+    </div>
+    {% else %}
+    <div class="comments-wrapper">
+        <h1 style="text-align: center;">No comments yet!</h1>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock content %}

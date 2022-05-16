@@ -1,0 +1,28 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<div class="follow-wrapper">
+    <h1 style="text-align: center;">{{profile.user.profile}}'s followers</h1>
+    {% if follower.follower.profile.num_of_followers != 0 %}
+    {% for follower in followers %}
+    <div class="single-follow-wrapper">
+        <a href="{% url 'profile' follower.follower.profile.username %}"><img src="{{follower.follower.profile.profile_pic.url}}" alt=""></a>
+        <h5><a href="{% url 'profile' follower.follower.profile.username %}">{{follower.follower}}</a></h5>
+        {% if follower.follower.profile.username in following_lst %}
+        <div class="user-follow"><a class="user-follow-btn" href="{% url 'follow' follower.follower.profile.id %}" style="color: rgb(245, 56, 56);"><span id="{{follower.follower.profile.id}}" class="unfollow-color">Unfollow</span></a></div>
+        {% elif follower.follower.profile.username not in following_lst and follower.follower != user.user %}
+        <div class="user-follow"><a class="user-follow-btn" href="{% url 'follow' follower.follower.profile.id %}"><span id="{{follower.follower.profile.id}}" class="follow-color">Follow</span></a></div>
+        {% endif %}
+        <p><a href="{% url 'followers' follower.follower.profile %}"><span id="{{follower.follower.profile.id}}456">{{follower.follower.profile.num_of_followers}}</span></span> followers</a></p>
+        <p><a href="{% url 'following' follower.follower.profile %}"><span id="{{follower.follower.profile.id}}654">{{follower.follower.profile.num_of_followings}}</span> following</a></p>
+    </div>
+    {% endfor %}
+    {% elif follower.follower.profile.num_of_followers == 0 %}
+    <h1 style="text-align: center; margin-top: 150px;">No followers yet</h1>
+    {% endif %}
+</div>
+
+{% endblock content %}

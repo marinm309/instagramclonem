@@ -1,0 +1,29 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+
+{% load static %}
+
+<div class="login-png">
+    <div class="login-elements">
+        <div class="login-wrapper-special edit-profile">
+            <h3>Current profile picture</h3>
+            <img style="width: 300px; height: 300px; overflow: hidden; object-fit: cover;" src="{{profile_img_now.url}}" alt="">
+            <form action="{% url 'edit-profile' user.user.profile.id %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                {{form.as_p}}
+
+
+                <input id="login-btn" type="submit" value="Save">
+            </form>
+
+            <form action="{% url 'delete-profile' user.user.profile.id %}">
+                <input style="background-color: red;" id="login-btn" type="submit" value="Delete profile">
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

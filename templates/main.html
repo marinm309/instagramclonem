@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500&display=swap" rel="stylesheet">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="{% static 'js/mute.js' %}"></script>
+
+    
+
+    <title>Instagram</title>
+</head>
+<body>
+    <nav>
+        <div class="nav-elements">
+            <h1 class="logo"><a href="{% url 'home' %}">Instagram</a></h1>
+            <form action="{% url 'search-result-profiles' %}" method="POST">
+                {% csrf_token %}
+                <div class="nav-search">
+                    <i class="fa fa-search"></i>
+                    <input type="text" name="search" placeholder="Search...">
+                </div>
+            </form>
+            <ul class="main-nav">
+                <li style="height: 24px;"><a style="font-size: 26px;" href="{% url 'home' %}"><i class='fa fa-home'></i></a></li>
+                <li style="height: 24px;"><a style="font-size: 26px;" href="{% url 'create-post' %}"><i class="fa fa-plus-square"></i></a></li>
+                <li style="height: 24px;"><a style="font-size: 0px;" href="{% url 'inbox' %}"><svg aria-label="Direct" class="_8-yf5 " color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24"><line fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2" x1="22" x2="9.218" y1="3" y2="10.083"></line><polygon fill="none" points="11.698 20.334 22 3.001 2 3.001 9.218 10.084 11.698 20.334" stroke="currentColor" stroke-linejoin="round" stroke-width="2"></polygon></svg></a></li>
+                <li style="height: 24px;"><a style="font-size: 0px;" href="{% url 'profile' user.username %}"><img src="{{user.user.profile.profile_pic.url}}" alt="" class="nav-profile"></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="just-for-space">
+
+    </div>
+
+    {% block content %}
+
+
+    {% endblock content %}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{% static 'js/ajax.js' %}"></script>
+
+</body>
+</html>
