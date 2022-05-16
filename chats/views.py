@@ -24,7 +24,7 @@ def active_chat(request, pk):
     chat_with = Profile.objects.get(id=pk)
     active = True
     chat = Chat.objects.filter(other_user=chat_with, user=user.user)
-    other_user_img = '/images/' + str(chat_with.profile_pic)
+    other_user_img = 'https://instagramclonem.s3.amazonaws.com' + '/' + str(chat_with.profile_pic)
     other_user_activity = chat_with.get_last_seen()
     if len(chat) == 0:
         Chat.objects.create(other_user=chat_with)
