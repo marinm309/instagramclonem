@@ -1108,4 +1108,8 @@ nav form{
         width: 100% !important;
         object-fit: cover;
     }
+
+    .user-name h5{
+        padding: 0 10px !important;
+    }
 }
