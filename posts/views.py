@@ -6,6 +6,7 @@ from users.models import Profile, UserFollowers
 import os
 from django.http import JsonResponse
 import re
+from django.contrib import messages
 
 @login_required(login_url='login')
 def home(request):
@@ -56,7 +57,7 @@ def create_post(request):
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
         extesion = os.path.splitext(str(request.FILES['file_upload']))[1]
-        if form.is_valid:
+        if form.is_valid():
             post = form.save(commit=False)
             post.user = user
             if extesion == '.mp4':
@@ -67,6 +68,8 @@ def create_post(request):
             profile.total_posts += 1
             profile.save()
             return redirect('home')
+        else:
+            messages.error(request, 'Incorrect file type!')
     context = {'form': form, 'user': user}
     return render(request, 'posts/create_post.html', context)
 
@@ -87,7 +90,7 @@ def edit_post(request, pk):
     form = PostForm(instance=post)
     if request.method == 'POST':
         form = PostForm(request.POST, instance=post)
-        if form.is_valid:
+        if form.is_valid():
             form.save()
             return redirect(f'/profile/{user.user}')
     context = {'form': form}
@@ -301,7 +304,7 @@ def create_story(request):
     if request.method == 'POST':
         form = StoryForm(request.POST, request.FILES)
         extesion = os.path.splitext(str(request.FILES['file_upload']))[1]
-        if form.is_valid:
+        if form.is_valid():
             story = form.save(commit=False)
             story.user = user
             if extesion == '.mp4':
@@ -310,5 +313,7 @@ def create_story(request):
                 story.story_type = 'photo'
             story.save()
             return redirect('home')
+        else:
+            messages.error(request, 'Incorrect file type!')
     context = {'user': user, 'form': form}
     return render(request, 'posts/create_story.html', context)

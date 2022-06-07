@@ -11,7 +11,7 @@ li{
     font-size: 30px;
 }
 
-a{
+a, a:hover, a:focus, a:active{
     text-decoration: none;
     color: black;
 }
@@ -312,6 +312,12 @@ nav form{
 @media only screen and (max-width: 600px){
     .single-post{
         flex: 0 0 100%;
+    }
+    .logo{
+        font-size: 18px !important;
+    }
+    .main-nav{
+        padding: 0 !important;
     }
 }
 
@@ -1059,4 +1065,47 @@ nav form{
 
 #regular_time{
     display: block;
+}
+
+@media only screen and (max-width: 600px){
+    .user-img-large{
+        margin: 0;
+        width: 120px;
+        height: 120px;
+        box-sizing: border-box;
+    }
+
+    .user-img-large img{
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        margin: 0 auto;
+    }
+
+    .about{
+        width: 90%;
+    }
+
+    .about li{
+        text-align: center;
+    }
+
+    nav{
+        padding-left: 10px;
+        padding-right: 10px;
+        box-sizing: border-box;
+    }
+
+    #random-hr{
+        width: 90%;
+    }
+
+    .main-nav li{
+        padding: 0 5px;
+    }
+
+    .edit-profile img{
+        width: 100% !important;
+        object-fit: cover;
+    }
 }

@@ -27,6 +27,12 @@
                     </div>
                     {{field}}
 
+                    {% for error in field.errors %}
+
+                    <p style="color: red;">{{error}}</p>
+
+                    {% endfor %}
+
                     {% endfor %}
                     <input id="login-btn" type="submit" value="Register">
                 </form>

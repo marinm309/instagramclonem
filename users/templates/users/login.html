@@ -16,6 +16,19 @@
 <body>
     <div class="login-png">
         <div class="login-elements">
+            {% if messages %}
+            {% for message in messages %}
+            {% if message.tags == 'error' %}
+                <ul class="messages" style="border: 2px solid red; display: block; padding: 5px; background-color: white; margin: 0 auto; width: 40%; text-align: center;">
+            {% elif message.tags == 'success' %}
+                <ul class="messages" style="border: 2px solid green; display: block; padding: 5px; background-color: white; margin: 0 auto; width: 40%; text-align: center;">
+            {% endif %}
+            {% endfor %}
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %} style="font-size: 18px;">{{ message }}</li>
+            {% endfor %}
+                </ul>
+            {% endif %}
             <div class="login-wrapper">
                 <h1>Instagram</h1>
                 <form action="{% url 'login' %}" method="POST">

@@ -8,19 +8,19 @@ from posts.models import Post
 from .models import *
 from .forms import CustomUserCreationForm
 from chats.models import *
+from django.contrib import messages
 
 
 def user_register(request):
     form = CustomUserCreationForm()
     if request.user.is_authenticated:
         return redirect('home')
-    elif request.method == 'POST':
+    if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
-        if form.is_valid:
+        if form.is_valid():
             form.save()
+            messages.success(request, 'Account created!')
             return redirect('login')
-        else:
-            return redirect('register')
     context = {'form': form}
     return render(request, 'users/register.html', context)
 
@@ -42,6 +42,8 @@ def user_login(request):
             user.is_active = True
             user.save()
             return redirect('home')
+        else:
+            messages.error(request, 'Username OR Password is incorrect!')
     context = {}
     return render(request, 'users/login.html', context)
 
@@ -73,9 +75,11 @@ def edit_profile(request, pk):
     form = ProfileForm(instance=profile)
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, instance=profile)
-        if form.is_valid:
+        if form.is_valid():
             form.save()
             return redirect(f'/profile/{user.user}/')
+        else:
+            messages.error(request, 'Incorrect file type!')
 
     context = {'form': form, 'user': user, 'profile_img_now': profile_img_now}
     return render(request, 'users/edit_profile.html', context)
@@ -99,6 +103,7 @@ def user_logout(request):
     user.is_active = False
     user.save()
     logout(request)
+    messages.error(request, 'User was logged out!')
     return redirect('login')
 
 @login_required(login_url='login')

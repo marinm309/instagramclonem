@@ -7,6 +7,7 @@ boto3==1.23.0
 botocore==1.26.0
 bottle==0.12.19
 bottle-websocket==0.2.9
+Brotli==1.0.9
 bs4==0.0.1
 certifi==2021.5.30
 cffi==1.15.0
@@ -46,6 +47,7 @@ Pillow==8.3.2
 platformdirs==2.4.0
 proglog==0.1.10
 psutil==5.8.0
+psycopg2==2.9.3
 puppet-master==0.1.0
 pycparser==2.20
 pygame==2.0.1

@@ -6,6 +6,13 @@
 
 <div class="login-png">
     <div class="login-elements">
+        {% if messages %}
+            <ul class="messages" style="border: 2px solid red; display: block; padding: 5px; background-color: white; margin: 0 auto; width: 40%; text-align: center;">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %} style="font-size: 18px;">{{ message }}</li>
+        {% endfor %}
+            </ul>
+        {% endif %}
         <div class="login-wrapper-special">
             <form action="{% url 'create-post' %}" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
