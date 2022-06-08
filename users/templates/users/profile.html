@@ -10,9 +10,9 @@
             <div class="user-img-large">
                 <img src="{{profile.profile_pic.url}}" alt="">
                 {% if profile.user.profile in lst %}
-                <div style="justify-content: center; display: flex;" class="user-follow"><a class="user-follow-btn" href="{% url 'follow' profile.id %}" style="color: rgb(245, 56, 56);"><span class="unfollow-color" id="{{profile.id}}">Unfollow</span></a></div>
+                <div style="justify-content: center; display: flex;" class="user-follow"><a class="user-follow-btn" href="{% url 'follow' profile.id %}" style="color: rgb(245, 56, 56);"><span class="unfollow-color {{profile.id}}" id="{{profile.id}}">Unfollow</span></a></div>
                 {% elif profile.user not in lst and profile.user.profile != user %}
-                <div style="justify-content: center; display: flex;" class="user-follow"><a class="user-follow-btn" href="{% url 'follow' profile.id %}"><span class="follow-color" id="{{profile.id}}">Follow</span></a></div>
+                <div style="justify-content: center; display: flex;" class="user-follow"><a class="user-follow-btn" href="{% url 'follow' profile.id %}"><span class="follow-color {{profile.id}}" id="{{profile.id}}">Follow</span></a></div>
                 {% elif profile.user.profile == user %}
                 <div class="profile-follow"><a href="{% url 'logout' %}" style="color: rgb(245, 56, 56);">Logout</a></div>
                 {% endif %}

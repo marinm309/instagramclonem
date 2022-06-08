@@ -142,10 +142,6 @@ def follow(request, pk):
     user = request.user.profile
     to_follow = Profile.objects.get(id=pk)
     profile = Profile.objects.get(id=user.id)
-    to_follow.total_followers += 1
-    to_follow.save()
-    profile.total_following += 1
-    profile.save()
     possible = UserFollowers.objects.filter(user=to_follow, follower=profile.user)
     if len(possible) == 0:
         UserFollowers.objects.create(user=to_follow, follower=profile.user)

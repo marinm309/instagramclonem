@@ -121,8 +121,18 @@ nav form{
 .post-top{
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    
     width: 50%;
+}
+
+.user-name{
+    padding: 0 10px 0 30px;
+    margin: 0 !important;
+}
+
+.user-follow{
+    padding: 0 10px 0 10px;
+    margin: 0 !important;
 }
 
 .user-img{
@@ -1123,5 +1133,41 @@ nav form{
 
     .user-name h5{
         padding: 0 10px !important;
+    }
+    .friend{
+        padding: 0;
+        padding-left: 5px;
+    }
+
+    .friend-img img{
+        width: 35px;
+        height: 35px;
+        margin-right: 35px;
+    }
+
+    .friend-name-activity{
+        font-size: 14px;
+    }
+
+    .friend-name-activity p{
+        display: inline-block !important;
+    }
+
+    #status{
+        font-size: 12px;
+        display: inline-block !important;
+    }
+
+    .left-inbox{
+        width: 40%;
+    }
+
+    .user-name{
+        padding-left: 12px !important;
+        padding-right: 5px !important;
+    }
+
+    .user-follow{
+        padding: 0 !important;
     }
 }

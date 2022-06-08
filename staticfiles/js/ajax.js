@@ -92,11 +92,18 @@ $('.user-follow-btn').click(function(u){
         method: '',
         data: {},
         success: function(request){
+            var follow_txt = $('#' + request.basic_indf).text()
+            if(follow_txt == 'Follow'){
+                $('.' + request.basic_indf).text('Unfollow')
+                $('.' + request.basic_indf).css('color', 'red')
+            }else{
+                $('.' + request.basic_indf).text('Follow')
+                $('.' + request.basic_indf).css('color', 'blue')
+            }
             $('#' + request.basic_indf + '123').text(request.profile_followers)
             $('#' + request.basic_indf + '321').text(request.profile_followings)
             $('#' + request.basic_indf + '456').text(request.profile_followers)
             $('#' + request.basic_indf + '654').text(request.profile_followings)
-            $('#' + request.basic_indf).load(location.href + ' ' + '#' + request.basic_indf);
         }
     });
 });

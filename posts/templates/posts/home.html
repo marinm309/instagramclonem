@@ -40,9 +40,9 @@
             <div style="margin-right: 58%;" class="user-name"><h5><a href="{% url 'profile' post.user %}">{{post.user}}</a></h5></div>
             {% endif %}
             {% if post.user not in lst and post.user != user %}
-            <div class="user-follow"><a class="user-follow-btn" href="{% url 'follow' post.user.id %}"><span class="follow-color" id="{{post.user.id}}">Follow</span></a></div>
+            <div class="user-follow"><a class="user-follow-btn" href="{% url 'follow' post.user.id %}"><span class="follow-color {{post.user.id}}" id="{{post.user.id}}">Follow</span></a></div>
             {% elif post.user in lst %}
-            <div class="user-follow"><a class="user-follow-btn" href="{% url 'follow' post.user.id %}" style="color: rgb(245, 56, 56);"><span class="unfollow-color" id="{{post.user.id}}">Unfollow</span></a></div>
+            <div class="user-follow"><a class="user-follow-btn" href="{% url 'follow' post.user.id %}" style="color: rgb(245, 56, 56);"><span class="unfollow-color {{post.user.id}}" id="{{post.user.id}}">Unfollow</span></a></div>
             {% endif %}
         </div>
         {% if post.post_type == 'photo' %}
@@ -89,9 +89,9 @@
             <div class="user-img home"><a href="{% url 'profile' post.user %}"><img src="{{post.user.user.profile.profile_pic.url}}" alt=""></a></div>
             <div class="user-name"><h5><a href="{% url 'profile' post.user %}">{{post.user}}</a></h5></div>
             {% if post.user not in lst and post.user != user %}
-            <div class="user-follow"><a class="user-follow-btn" href="{% url 'follow' post.user.id %}"><span class="follow-color" id="{{post.user.id}}">Follow</span></a></div>
+            <div class="user-follow"><a class="user-follow-btn" href="{% url 'follow' post.user.id %}"><span class="follow-color {{post.user.id}}" id="{{post.user.id}}">Follow</span></a></div>
             {% elif post.user in lst %}
-            <div class="user-follow"><a class="user-follow-btn" href="{% url 'follow' post.user.id %}" style="color: rgb(245, 56, 56);"><span class="unfollow-color" id="{{post.user.id}}">Unfollow</span></a></div>
+            <div class="user-follow"><a class="user-follow-btn" href="{% url 'follow' post.user.id %}" style="color: rgb(245, 56, 56);"><span class="unfollow-color {{post.user.id}}" id="{{post.user.id}}">Unfollow</span></a></div>
             {% endif %}
         </div>
         <div class="post-img"><img src="{{post.file_upload.url}}" alt=""></div>

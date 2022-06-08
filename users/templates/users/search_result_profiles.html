@@ -14,9 +14,9 @@
         <a href="{% url 'profile' profile.user %}"><img src="{{profile.profile_pic.url}}" alt=""></a>
         <h5><a href="{% url 'profile' profile.user %}">{{profile.user}}</a></h5>
         {% if profile.user.profile in lst %}
-        <div class="user-follow"><a class="user-follow-btn" href="{% url 'follow' profile.id %}" style="color: rgb(245, 56, 56);"><span id="{{profile.id}}" class="unfollow-color">Unfollow</span></a></div>
+        <div class="user-follow"><a class="user-follow-btn" href="{% url 'follow' profile.id %}" style="color: rgb(245, 56, 56);"><span id="{{profile.id}}" class="unfollow-color {{profile.id}}">Unfollow</span></a></div>
         {% else %}
-        <div class="user-follow"><a class="user-follow-btn" href="{% url 'follow' profile.id %}"><span id="{{profile.id}}" class="follow-color">Follow</span></a></div>
+        <div class="user-follow"><a class="user-follow-btn" href="{% url 'follow' profile.id %}"><span id="{{profile.id}}" class="follow-color {{profile.id}}">Follow</span></a></div>
         {% endif %}
         <p><a href="{% url 'followers' profile.username %}"><span id="{{profile.id}}456">{{profile.num_of_followers}}</span> followers</a></p>
         <p><a href="{% url 'following' profile.username %}"><span id="{{profile.id}}654">{{profile.num_of_followings}}</span> following</a></p>
