@@ -10,10 +10,8 @@ class Post(models.Model):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, unique=True, editable=False)
     created = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(Profile, null=True, on_delete=models.CASCADE)
-    title = models.CharField(max_length=100, null=True, blank=True)
     description = models.TextField(blank=True, null=True)
     like = models.IntegerField(default=0, null=True)
-    num_of_comments = models.IntegerField(default=0, null=True)
     photo = models.ImageField(null=True, upload_to='posts', blank=True)
     file_upload = models.FileField(null=True, upload_to='posts', validators=[FileExtensionValidator(allowed_extensions=['MOV','avi','mp4','webm','mkv','png','jpg'])])
     post_type = models.CharField(max_length=100, null=True)
@@ -45,7 +43,7 @@ class Post(models.Model):
         return liked
 
     def __str__(self) -> str:
-        return str(self.title)
+        return str(self.id)
 
 
 class Comments(models.Model):
@@ -54,7 +52,6 @@ class Comments(models.Model):
     user = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True)
     description = models.TextField(null=True)
-    likes = models.IntegerField(default=0, null=True)
     user_liked = models.ForeignKey('CommentLikes', on_delete=models.SET_NULL, null=True)
     replies = models.ForeignKey('CommentTheComment', on_delete=models.SET_NULL, null=True)
 

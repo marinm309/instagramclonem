@@ -17,9 +17,6 @@ class Profile(models.Model):
     phone_number = models.CharField(max_length=20, null=True, blank=True)
     followers = models.ForeignKey('UserFollowers', on_delete=models.CASCADE, null=True, blank=True)
     profile_pic = models.ImageField(null=True, blank=True, upload_to='profiles/', default='profiles/default.png')
-    total_followers = models.IntegerField(default=0, null=True)
-    total_following = models.IntegerField(default=0, null=True)
-    total_posts = models.IntegerField(default=0, null=True)
     is_active = models.BooleanField(default=False, null=True)
     last_seen = models.DateTimeField(blank=True, null=True)
 

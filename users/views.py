@@ -157,7 +157,6 @@ def follow(request, pk):
     profile_followers = str(to_follow.num_of_followers())
     profile_followings = str(to_follow.num_of_followings())
     return JsonResponse({'basic_indf': basic_indf, 'profile_followers': profile_followers, 'profile_followings': profile_followings})
-    return redirect(request.META['HTTP_REFERER'])
 
 
 @login_required(login_url='login')

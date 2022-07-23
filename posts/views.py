@@ -14,7 +14,6 @@ def home(request):
     following = UserFollowers.objects.filter(follower=user.user)
     stories = []
     user_stories = Story.objects.filter(user=user)
-    print(user_stories)
     if len(user_stories) > 0:
         for i in user_stories:
             stories.append(i)
@@ -65,7 +64,6 @@ def create_post(request):
             else:
                 post.post_type = 'photo'
             post.save()
-            profile.total_posts += 1
             profile.save()
             return redirect('home')
         else:
@@ -78,7 +76,6 @@ def delete_post(request, pk):
     user = request.user.profile
     post = Post.objects.get(id=pk)
     profile = Profile.objects.get(user=user.user)
-    profile.total_posts -= 1
     profile.save()
     post.delete()
     return redirect(f'/profile/{user.user}')
@@ -118,7 +115,6 @@ def like_post(request, pk):
         return JsonResponse({'likes': testing, 'indf': indf, 'basic_indf': basic_indf})
         
 
-    return redirect(request.META['HTTP_REFERER'])
 
 @login_required(login_url='login')
 def create_comment(request, pk):
@@ -144,11 +140,9 @@ def create_comment(request, pk):
     basic_indf = '#' + str(comment.id) + '789'
     return JsonResponse({'indf_comment': indf_comment, 'comments': total_comments, 'single_comment_id': single_comment_id, 'basic_indf': basic_indf})
 
-    return redirect(request.META['HTTP_REFERER'])
 
 @login_required(login_url='login')
 def start_reply(request, pk, ck):
-    user = request.user.profile
     comment = Comments.objects.get(id=ck)
     reply_to = Profile.objects.get(id=pk)
     reply_key_word = '@' + str(reply_to.username)
@@ -156,7 +150,6 @@ def start_reply(request, pk, ck):
 
 @login_required(login_url='login')
 def delete_comment(request, pk, ck):
-    user = request.user.profile
     post = Post.objects.get(id=pk)
     post.save()
     comment = Comments.objects.get(id=ck)
@@ -164,7 +157,6 @@ def delete_comment(request, pk, ck):
     comment.delete()
     return JsonResponse({'basic_indf': basic_indf})
 
-    return redirect(request.META['HTTP_REFERER'])
 
 @login_required(login_url='login')
 def like_comment(request, pk):
@@ -173,7 +165,6 @@ def like_comment(request, pk):
     like = CommentLikes.objects.filter(user=user, comment=comment)
     if len(like) == 0:
         like = CommentLikes.objects.create(user=user, comment=comment)
-        comment.likes += 1
         comment.save()
         testing = int(comment.num_of_likes())
         indf = '#' + str(comment.id)
@@ -182,14 +173,12 @@ def like_comment(request, pk):
     else:
         like = CommentLikes.objects.get(user=user, comment=comment)
         like.delete()
-        comment.likes -= 1
         comment.save()
         testing = int(comment.num_of_likes())
         indf = '#' + str(comment.id)
         basic_indf = str(comment.id)
         return JsonResponse({'likes': testing, 'indf': indf, 'basic_indf': basic_indf})
 
-    return redirect(request.META['HTTP_REFERER'])
 
 @login_required(login_url='login')
 def single_post(request,pk):

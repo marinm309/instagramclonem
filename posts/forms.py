@@ -5,7 +5,7 @@ from .models import Post, Comments, Story
 class PostForm(ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'file_upload', 'description']
+        fields = ['file_upload', 'description']
 
     def __init__(self, *args, **kwargs):
         super(PostForm, self).__init__(*args, **kwargs)

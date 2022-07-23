@@ -367,6 +367,7 @@ nav form{
     display: flex;
     justify-content: center;
     margin-top: 50px;
+    word-wrap: break-word;
 }
 
 .login-elements{
@@ -510,7 +511,7 @@ nav form{
 
 @media only screen and (max-width: 1000px){
     .login-elements{
-        width: 80%;
+        width: 100%;
     }
 }
 
@@ -738,6 +739,7 @@ nav form{
 
 .friend-info{
     height: 10vh;
+    width: 100%;
 }
 
 .friend-img{
@@ -793,7 +795,7 @@ nav form{
     }
 
     .right-inbox{
-        width: 50%;
+        width: 60%;
     }
 
     .chat-form{

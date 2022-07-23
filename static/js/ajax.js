@@ -149,7 +149,6 @@ $('.delete-reply-btn').click(function(w){
     w.preventDefault()
     var delete_reply = $(this)
     var delete_replyURL = delete_reply.attr('href')
-    console.log(delete_replyURL)
 
     $.ajax({
         url: delete_replyURL,
@@ -161,6 +160,7 @@ $('.delete-reply-btn').click(function(w){
         }
     });
 });
+
 
 $('.friend-btn').click(function(h){
     h.preventDefault()
@@ -179,7 +179,6 @@ $('.friend-btn').click(function(h){
             $('#js-username').text(request.chat_with)
             document.getElementById("js-img").src = request.other_user_img
             $('#js-status').text(request.other_user_activity)
-            $('.test-mess').empty()
             var mLen = request.merged_messages.length
             for (var i = 0; i < mLen; i++) {
                 if(mLen - 1 == i){
@@ -199,9 +198,14 @@ $('.friend-btn').click(function(h){
               }
                 var element = document.getElementById("last")
                 element.scrollIntoView()
+
+                var intervalId = window.setInterval(function(){
+                    
+                  }, 2000);
         }
     });
 });
+
 
 $('.send-message-btn').click(function(y){
     y.preventDefault()
@@ -210,7 +214,6 @@ $('.send-message-btn').click(function(y){
     var csrf = $('input[name=csrfmiddlewaretoken]').val()
     var message = $('.message-field').val()
     var other_user = $('#js-username').text()
-    console.log(other_user)
 
     $.ajax({
         url: send_messageURL,
@@ -238,7 +241,6 @@ $('#chat_search_word').click(function(g){
             method: 'GET',
             data: {chat_search_word: chat_search_word},
             success: function(request){
-                console.log(chat_search_word)
                 lstLen = request.all_in_chat.length
                 for (var i = 0; i < lstLen; i++){
                     var current_username = request.all_in_chat[i]
@@ -264,3 +266,7 @@ $('select').click(function(){
         custom_time_field.style.display = 'block'
     }
 });
+
+function loadlink(){ 
+        $('.friend-btn').trigger('click');
+}
