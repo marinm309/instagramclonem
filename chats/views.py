@@ -22,6 +22,7 @@ def inbox(request):
 def active_chat(request, pk):
     user = request.user.profile
     chat_with = Profile.objects.get(id=pk)
+    chat_with_id = chat_with.id
     active = True
     chat = Chat.objects.filter(other_user=chat_with, user=user.user)
     other_user_img = 'https://instagramclonem.s3.amazonaws.com' + '/' + str(chat_with.profile_pic)
@@ -44,7 +45,7 @@ def active_chat(request, pk):
         else:
             merged_users.append(chat_with.username)
 
-    return JsonResponse({'other_user_activity':other_user_activity, 'other_user_img': other_user_img, 'active': active, 'chat': chat.id, 'merged_messages': merged_messages, 'merged_users': merged_users, 'user': user.username, 'chat_with': chat_with.username})
+    return JsonResponse({'other_user_activity':other_user_activity, 'other_user_img': other_user_img, 'active': active, 'chat': chat.id, 'merged_messages': merged_messages, 'merged_users': merged_users, 'user': user.username, 'chat_with': chat_with.username, 'chat_with_id': chat_with_id})
 
 @login_required(login_url='login')
 def send_message(request):

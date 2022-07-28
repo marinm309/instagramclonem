@@ -161,48 +161,57 @@ $('.delete-reply-btn').click(function(w){
     });
 });
 
+var chat_with_id = 0
+var cnt = 0
+$('.friend-btn').click(function(lama){
+    lama.preventDefault()
+    var user = $(this)
+    var user_url = user.attr('href')
+    chat_with_id = user_url
+})
 
-$('.friend-btn').click(function(h){
-    h.preventDefault()
-    var friend = $(this)
-    var friendURL = friend.attr('href')
-
-    $.ajax({
-        url: friendURL,
-        method: '',
-        data: {},
-        success: function(request){
-            document.getElementById('to-be-cleared').replaceChildren()
-            hide_element = document.getElementById('to_be_hidden')
-            hide_element.style.display = 'none'
-            show_element = document.getElementById('to_be_shown')
-            show_element.style.display = 'block'
-            $('#js-username').text(request.chat_with)
-            document.getElementById("js-img").src = request.other_user_img
-            $('#js-status').text(request.other_user_activity)
-            var mLen = request.merged_messages.length
-            for (var i = 0; i < mLen; i++) {
-                if(mLen - 1 == i){
-                    if(request.merged_users[i] == request.user){
-                        $('.test-mess').append('<div class="right-bubble-wrapper" id="last">' + '<div class="right-bubble">' + '<li class="right-text">' + request.merged_messages[i] + '</li>' + '</div>' + '</div>') 
+$(document).ready(function(){
+    setInterval(function(){
+        $.ajax({
+            type: 'GET',
+            url: chat_with_id,
+            success: function(request){
+                if (chat_with_id != 0){
+                    cnt += 1
+                }
+                if(cnt > 1){
+                    document.getElementById('to-be-cleared').replaceChildren()
+                    hide_element = document.getElementById('to_be_hidden')
+                    hide_element.style.display = 'none'
+                    show_element = document.getElementById('to_be_shown')
+                    show_element.style.display = 'block'
+                    $('#js-username').text(request.chat_with)
+                    document.getElementById("js-img").src = request.other_user_img
+                    $('#js-status').text(request.other_user_activity)
+                    var mLen = request.merged_messages.length
+                    for (var i = 0; i < mLen; i++) {
+                        if(mLen - 1 == i){
+                            if(request.merged_users[i] == request.user){
+                                $('.test-mess').append('<div class="right-bubble-wrapper" id="last">' + '<div class="right-bubble">' + '<li class="right-text">' + request.merged_messages[i] + '</li>' + '</div>' + '</div>') 
+                            }
+                            else{
+                                $('.test-mess').append('<div class="left-bubble-wrapper" id="last">' + '<div class="left-bubble">' + '<li class="left-text">' + request.merged_messages[i] + '</li>' + '</div>' + '</div>')
+                            }
+                        }
+                        else if(request.merged_users[i] == request.user){
+                            $('.test-mess').append('<div class="right-bubble-wrapper">' + '<div class="right-bubble">' + '<li class="right-text">' + request.merged_messages[i] + '</li>' + '</div>' + '</div>')
+                        }
+                        else{
+                            $('.test-mess').append('<div class="left-bubble-wrapper">' + '<div class="left-bubble">' + '<li class="left-text">' + request.merged_messages[i] + '</li>' + '</div>' + '</div>')
+                        }
                     }
-                    else{
-                        $('.test-mess').append('<div class="left-bubble-wrapper" id="last">' + '<div class="left-bubble">' + '<li class="left-text">' + request.merged_messages[i] + '</li>' + '</div>' + '</div>')
-                    }
+                    var element = document.getElementById('last')
+                    element.scrollIntoView()
                 }
-                else if(request.merged_users[i] == request.user){
-                    $('.test-mess').append('<div class="right-bubble-wrapper">' + '<div class="right-bubble">' + '<li class="right-text">' + request.merged_messages[i] + '</li>' + '</div>' + '</div>')
-                }
-                else{
-                    $('.test-mess').append('<div class="left-bubble-wrapper">' + '<div class="left-bubble">' + '<li class="left-text">' + request.merged_messages[i] + '</li>' + '</div>' + '</div>')
-                }
-              }
-              var element = document.getElementById('last')
-              element.scrollIntoView()
-        }
-    });
-});
-
+            }
+        })
+    }, 1000)
+})
 
 $('.send-message-btn').click(function(y){
     y.preventDefault()
@@ -263,3 +272,4 @@ $('select').click(function(){
         custom_time_field.style.display = 'block'
     };
 });
+
