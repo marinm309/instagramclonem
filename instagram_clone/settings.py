@@ -28,6 +28,8 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['instagramclonem.herokuapp.com', 'localhost', '127.0.0.1']
 
+CSRF_TRUSTED_ORIGINS = ['https://example.com']
+
 
 # Application definition
 
