@@ -26,9 +26,9 @@ SECRET_KEY = 'django-insecure-e4f!h_m-16=l_21ys7n3%$dwpzeceux4luud1h5--i0s$1k5yi
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['instagramclonem.herokuapp.com', 'localhost', '127.0.0.1', 'web-production-a346.up.railway.app']
+ALLOWED_HOSTS = ['instagramclonem.herokuapp.com', 'localhost', '127.0.0.1', 'instagramclonem.up.railway.app']
 
-CSRF_TRUSTED_ORIGINS = ['https://web-production-a346.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://instagramclonem.up.railway.app']
 
 
 # Application definition
